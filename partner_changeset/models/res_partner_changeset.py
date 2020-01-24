@@ -282,7 +282,7 @@ class ResPartnerChangesetChange(models.Model):
         return [(model.model, model.name) for model in models]
 
     _suffix_to_types = {
-        'char': ('char', 'selection'),
+        'char': ('char', 'selection', 'html'),
         'date': ('date',),
         'datetime': ('datetime',),
         'float': ('float',),
