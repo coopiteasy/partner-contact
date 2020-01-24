@@ -16,7 +16,7 @@ class ChangesetFieldRule(models.Model):
         domain="[('model_id.model', '=', 'res.partner'), "
                " ('ttype', 'in', ('char', 'selection', 'date', 'datetime', "
                "                 'float', 'integer', 'text', 'boolean', "
-               "                 'many2one')), "
+               "                 'many2one', 'html')), "
                " ('readonly', '=', False)]",
         ondelete='cascade',
         required=True,
