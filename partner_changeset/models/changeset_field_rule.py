@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2015-2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -121,7 +120,7 @@ class ChangesetFieldRule(models.Model):
         """
         rules = {}
         cached_rules = self._get_rules(source_model_name)
-        for field, rule_id in cached_rules.iteritems():
+        for field, rule_id in cached_rules.items():
             rules[field] = self.browse(rule_id)
         return rules
 

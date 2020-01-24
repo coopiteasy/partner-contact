@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2015-2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -294,7 +293,7 @@ class ResPartnerChangesetChange(models.Model):
     }
 
     _type_to_suffix = {ftype: suffix
-                       for suffix, ftypes in _suffix_to_types.iteritems()
+                       for suffix, ftypes in _suffix_to_types.items()
                        for ftype in ftypes}
 
     _origin_value_fields = ['origin_value_%s' % suffix
@@ -503,7 +502,7 @@ class ResPartnerChangesetChange(models.Model):
         if result['type'] != 'form':
             return
         doc = etree.XML(result['arch'])
-        for suffix, ftypes in self._suffix_to_types.iteritems():
+        for suffix, ftypes in self._suffix_to_types.items():
             for prefix in ('origin', 'old', 'new'):
                 field_name = '%s_value_%s' % (prefix, suffix)
                 field_nodes = doc.xpath("//field[@name='%s']" % field_name)
