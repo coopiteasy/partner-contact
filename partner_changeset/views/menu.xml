@@ -3,6 +3,6 @@
       <menuitem id="menu_changeset"
         name="Partner Changesets"
         groups="group_changeset_user"
-        parent="sale.menu_sales_config"
+        parent="contacts.res_partner_menu_config"
         sequence="20"/>
 </odoo>
