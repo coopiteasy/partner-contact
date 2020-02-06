@@ -175,6 +175,9 @@ class ResPartnerChangesetChange(models.Model):
     _description = 'Partner Changeset Change'
     _rec_name = 'field_id'
 
+    def _default_company(self):
+        return self.env['res.company']._company_default_get('res.partner')
+
     changeset_id = fields.Many2one(comodel_name='res.partner.changeset',
                                    required=True,
                                    string='Changeset',
@@ -187,7 +190,14 @@ class ResPartnerChangesetChange(models.Model):
     field_type = fields.Selection(related='field_id.ttype',
                                   string='Field Type',
                                   readonly=True)
-
+    company_id = fields.Many2one('res.company', 
+                                 'Company',
+                                 index=True,
+                                 default=_default_company)
+    company_currency_id = fields.Many2one('res.currency',
+                                          related='company_id.currency_id',
+                                          string="Company Currency",
+                                          readonly=True)
     origin_value_display = fields.Char(
         string='Previous',
         compute='_compute_value_display',
@@ -211,6 +221,10 @@ class ResPartnerChangesetChange(models.Model):
     origin_value_float = fields.Float(compute='_compute_origin_values',
                                       string='Previous',
                                       readonly=True)
+    origin_value_monetary = fields.Monetary(compute='_compute_origin_values',
+                                            string='Previous',
+                                            readonly=True,
+                                            currency_field='company_currency_id')
     origin_value_integer = fields.Integer(compute='_compute_origin_values',
                                           string='Previous',
                                           readonly=True)
@@ -237,6 +251,9 @@ class ResPartnerChangesetChange(models.Model):
                                          readonly=True)
     old_value_float = fields.Float(string='Old',
                                    readonly=True)
+    old_value_monetary = fields.Monetary(string='Old',
+                                         readonly=True,
+                                         currency_field='company_currency_id')
     old_value_integer = fields.Integer(string='Old',
                                        readonly=True)
     old_value_text = fields.Text(string='Old',
@@ -256,6 +273,9 @@ class ResPartnerChangesetChange(models.Model):
                                          readonly=True)
     new_value_float = fields.Float(string='New',
                                    readonly=True)
+    new_value_monetary = fields.Monetary(string='New',
+                                         readonly=True,
+                                         currency_field='company_currency_id')
     new_value_integer = fields.Integer(string='New',
                                        readonly=True)
     new_value_text = fields.Text(string='New',
@@ -286,6 +306,7 @@ class ResPartnerChangesetChange(models.Model):
         'date': ('date',),
         'datetime': ('datetime',),
         'float': ('float',),
+        'monetary': ('monetary',),
         'integer': ('integer',),
         'text': ('text',),
         'boolean': ('boolean',),
