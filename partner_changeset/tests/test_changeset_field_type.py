@@ -4,7 +4,7 @@
 
 from odoo.tests import common
 from .common import ChangesetMixin
-
+from odoo.fields import Date
 
 class TestChangesetFieldType(ChangesetMixin, common.TransactionCase):
     """ Check that changeset changes are stored expectingly to their types """
@@ -99,7 +99,7 @@ class TestChangesetFieldType(ChangesetMixin, common.TransactionCase):
             self.partner,
             self.env.user,
             [(self.field_date, self.partner[self.field_date.name],
-              '2015-09-15', 'draft'),
+              Date.to_date('2015-09-15'), 'draft'),
              ]
         )
 
@@ -217,15 +217,15 @@ class TestChangesetFieldType(ChangesetMixin, common.TransactionCase):
         changes = [(self.field_date, '2015-09-15', 'draft')]
         changeset = self._create_changeset(self.partner, changes)
         changeset.change_ids.apply()
-        self.assertAlmostEqual(self.partner[self.field_date.name],
-                               '2015-09-15')
+        expected_date = Date.to_string(self.partner[self.field_date.name])
+        self.assertEqual(expected_date, '2015-09-15')
 
     def test_apply_integer(self):
         """ Apply a change on a Integer field """
         changes = [(self.field_integer, 42, 'draft')]
         changeset = self._create_changeset(self.partner, changes)
         changeset.change_ids.apply()
-        self.assertAlmostEqual(self.partner[self.field_integer.name], 42)
+        self.assertEqual(self.partner[self.field_integer.name], 42)
 
     def test_apply_float(self):
         """ Apply a change on a Float field """
@@ -239,7 +239,7 @@ class TestChangesetFieldType(ChangesetMixin, common.TransactionCase):
         changes = [(self.field_selection, 'delivery', 'draft')]
         changeset = self._create_changeset(self.partner, changes)
         changeset.change_ids.apply()
-        self.assertAlmostEqual(self.partner[self.field_selection.name],
+        self.assertEqual(self.partner[self.field_selection.name],
                                'delivery')
 
     def test_apply_many2one(self):

@@ -18,7 +18,7 @@ class TestChangesetOrigin(ChangesetMixin, common.TransactionCase):
     def _setup_rules(self):
         ChangesetFieldRule = self.env['changeset.field.rule']
         ChangesetFieldRule.search([]).unlink()
-        self.field_name = self.env.ref('base.field_res_partner_name')
+        self.field_name = self.env.ref('base.field_res_partner__name')
         ChangesetFieldRule.create({
             'field_id': self.field_name.id,
             'action': 'validate',

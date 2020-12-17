@@ -10,8 +10,8 @@ class TestChangesetFieldRule(common.TransactionCase):
     def setUp(self):
         super(TestChangesetFieldRule, self).setUp()
         self.company_model_id = self.env.ref('base.model_res_company').id
-        self.field_name = self.env.ref('base.field_res_partner_name')
-        self.field_street = self.env.ref('base.field_res_partner_street')
+        self.field_name = self.env.ref('base.field_res_partner__name')
+        self.field_street = self.env.ref('base.field_res_partner__street')
 
     def test_get_rules(self):
         ChangesetFieldRule = self.env['changeset.field.rule']
